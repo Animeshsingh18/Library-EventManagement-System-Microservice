@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: library-events-producer
+  namespace: default
+  labels:
+    app: library-events-producer
+spec:
+  type: NodePort                  # exposes the service on a port on the node
+  selector:
+    app: library-events-producer  # routes traffic to Pods with this label
+  ports:
+    - port: 8080                  # the port the Service listens on inside the cluster
+      targetPort: 8080            # the port the container inside the Pod listens on
+      protocol: TCP
+

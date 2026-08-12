@@ -1,0 +1,50 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.0.4'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.learnjava'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25) // LTS
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	//kafka
+	implementation 'org.springframework.boot:spring-boot-starter-kafka'
+
+
+	//actuator
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// web + validation
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
+
+	// Jackson alignment note:
+	// Keep databind on 2.20.x so it stays aligned with jackson-annotations:2.20 from the BOM.
+	// This avoids runtime serializer mismatch issues when using Kafka JsonSerializer.
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.2'
+
+//	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+	//testing
+	testImplementation 'org.springframework.boot:spring-boot-starter-kafka-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

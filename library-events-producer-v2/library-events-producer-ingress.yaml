@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: library-events-producer-ingress
+  namespace: default
+  labels:
+    app: library-events-producer
+spec:
+  ingressClassName: nginx           # use the nginx Ingress Controller
+  rules:
+    - host: library-producer.local  # requests to this hostname are handled here
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: library-events-producer
+                port:
+                  number: 8080
+
